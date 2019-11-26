@@ -14,9 +14,11 @@ namespace Backing_Share___API.Repositories
                 {
                     name = projectModel.name,
                     isPublic = projectModel.isPublic,
-                    Id = projectModel.userId
+                    userId = projectModel.userId
                 };
                 db.Projects.Add(dbProject);
+                db.SaveChanges();
+                
             }
         }
 

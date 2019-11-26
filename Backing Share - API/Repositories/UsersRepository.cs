@@ -19,7 +19,8 @@ namespace Backing_Share___API.Repositories
                 {
                     Username = userInfo.Username,
                     Email = userInfo.Email,
-                    PasswordHash = passwordHash
+                    PasswordHash = passwordHash,
+                    
                 };
                 db.Users.Add(dbUser);
 

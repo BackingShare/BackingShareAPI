@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Backing_Share___API.Models.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backing_Share___API.Models
 {
@@ -15,7 +16,8 @@ namespace Backing_Share___API.Models
 
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
-
+        public virtual DbSet<Audio> Audio { get; set; }
+        public virtual DbSet<ProjectsXAudios> ProjectsXAudios { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -29,7 +31,7 @@ namespace Backing_Share___API.Models
         {
             modelBuilder.Entity<Users>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -45,6 +47,20 @@ namespace Backing_Share___API.Models
                     .IsRequired()
                     .HasMaxLength(30)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Projects>(entity =>
+            {
+                entity.Property(e => e.name)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.isPublic)
+                    .IsRequired();
+
+                entity.Property(e => e.userId)
+                    .IsRequired();
+
             });
 
             OnModelCreatingPartial(modelBuilder);

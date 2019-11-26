@@ -24,12 +24,14 @@ namespace Backing_Share___API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddTransient<IUsersHelper, UsersHelper>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<IProjectsHelper, ProjectsHelper>();
@@ -54,7 +56,7 @@ namespace Backing_Share___API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
             app.UseRouting();

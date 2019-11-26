@@ -1,4 +1,5 @@
 ﻿using Backing_Share___API.Helpers;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Backing_Share___API.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
+    [EnableCors("AllowAll")]
     public class AudioController : Controller
     {
         private IAudioHelper _audioHelper;
@@ -23,9 +25,10 @@ namespace Backing_Share___API.Controllers
         // GET: Audio/Details/5
 
         [HttpPost]
-        public ActionResult Create(string location)
+        public ActionResult Create(string location, string filename, int project, int userId)
         {
-            _audioHelper.CreateAsync(location);
+            _audioHelper.CreateAsync(location, filename);
+            _audioHelper.StoreInDB(location, filename, project, userId);
             return Ok();
         }
 

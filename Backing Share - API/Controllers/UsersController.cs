@@ -1,13 +1,15 @@
 ﻿
 using Backing_Share___API.Helpers;
 using Backing_Share___API.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace Backing_Share___API.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
+    [EnableCors("AllowAll")]
     public class UsersController : Controller
     {
         private IUsersHelper _userHelper;
@@ -29,7 +31,8 @@ namespace Backing_Share___API.Controllers
             User user = _userHelper.GetUserByUsername(username);
             return user;
         }
-        public bool VerifyUserPassword(User user)
+        [HttpPost]
+        public bool VerifyUserPassword([FromBody] User user)
         {
             bool confirmation = _userHelper.VerifyUserPassword(user);
             return confirmation;
@@ -38,7 +41,7 @@ namespace Backing_Share___API.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(User user)
+        public IActionResult Create([FromBody]User user)
         {
             try
             {

@@ -21,7 +21,7 @@ namespace Backing_Share___API.Helpers
             _configuration = configuration;
         }
 
-        public async Task CreateAsync(string location)
+        public async Task CreateAsync(string location, string name)
         {
             // Create Reference to Azure Storage Account
             string strorageconn = _configuration.GetConnectionString("StorageConnectionString");
@@ -36,12 +36,12 @@ namespace Backing_Share___API.Helpers
             await container.CreateIfNotExistsAsync();
 
             //The next 7 lines upload the file test.txt with the name DemoBlob on the container "democontainer"
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference("teste");
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(name);
             using (var filestream = System.IO.File.OpenRead(location))
             {
 
                 await blockBlob.UploadFromStreamAsync(filestream);
-                // _audioRepository.Create(blockBlob.Uri.AbsoluteUri)
+     
             }
         }
 
@@ -69,9 +69,14 @@ namespace Backing_Share___API.Helpers
             }
         }
 
+        public void StoreInDB(string location, string filename, int project, int userId)
+        {
+            _audioRepository.StoreInDB(location, filename, project, userId);
+        }
+
         public async Task<List<string>> GetAllAsync()
         {
-            List<string> list = new List<String>();
+            List<string> list = new List<string>();
             return list;
         }
 

@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backing_Share___API.Controllers
 {
-    [EnableCors("MyPolicy")]
+    [Route("[controller]/[action]")]
+    [EnableCors("AllowAll")]
     public class ProjectsController : Controller
     {
         private IProjectsHelper _projectsHelper;
@@ -17,19 +18,20 @@ namespace Backing_Share___API.Controllers
         {
             _projectsHelper = projectsHelper;
         }
-        // GET: Projects
-        public List<ProjectsModel> Get(int userId)
+        //GET: Projects
+        public List<ProjectsModel> GetProjectsByUserId(int userId)
         {
             try
             {
                 List<ProjectsModel> projects = _projectsHelper.GetProjectsByUserId(userId);
                 return projects;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
             }
-            
-           
+
+
 
         }
         public List<ProjectsModel> Get()
@@ -56,8 +58,9 @@ namespace Backing_Share___API.Controllers
 
         // POST: Projects/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(ProjectsModel projectModel)
+
+
+        public ActionResult Create([FromBody] ProjectsModel projectModel)
         {
             try
             {
@@ -72,49 +75,49 @@ namespace Backing_Share___API.Controllers
         }
 
         // GET: Projects/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: Projects/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        //// POST: Projects/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
-        // GET: Projects/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //// GET: Projects/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: Projects/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //// POST: Projects/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
